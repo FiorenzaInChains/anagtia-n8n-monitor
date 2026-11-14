@@ -11,12 +11,20 @@ Key advantages:
 * **Anti-False Alarms:** Integrated retry logic prevents alert fatigue for the IT department.
 * **Self-Hosted & Secure:** Runs entirely on your own infrastructure (Docker), keeping sensitive SSH credentials and data within your network perimeter.
 
+## 🎯 Target Audience
+This framework is designed for:
+- **Companies migrating to n8n:** Organizations looking to consolidate their IT tools (including monitoring) into a single, open-source, self-hosted automation platform to reduce costs and maintenance overhead.
+- **SMBs (Small and Medium Businesses):** Looking for a cost-effective, self-hosted monitoring solution without enterprise software costs.
+- **Mixed Infrastructures:** Companies that need to monitor both web services (HTTP) and internal servers (SSH) from a single visual dashboard.
+- **IT Teams preferring Low-Code:** Who want a visual, easily maintainable solution instead of complex custom scripts.
+
 ## 🚀 Features
 - **Dynamic Routing:** Fetches a list of programs and uses a Switch node to route checks to HTTP Request or SSH execution.
 - **Retry Logic to avoid False Alarms:** If a service fails, the workflow waits 60 seconds and tries again before sending an alert.
 - **Loop Management:** Processes items one by one to prevent system overload.
 - **Error Handling:** Uses `Continue (using error output)` to ensure the loop never breaks, even if a service is completely unreachable or the email server fails.
 - **Extensible Alerting:** While Email is used in this PoC, the modular architecture allows swapping or running in parallel the notification node (e.g., sending alerts via both Email and Slack/Teams) without changing the core monitoring logic.
+- **Flexible Alerting (Static & Dynamic):** The workflow currently uses static alerting (fixed email addresses in the notification nodes). However, the architecture is designed for **Dynamic Alert Routing**: by simply adding a `recipient` field (e.g., `dba@company.com`) to the `ListProgram` node, the workflow can automatically route alerts to the specific team responsible for the failing service, reducing alert fatigue for others.
 
 ## 🛠️ How it works
 1. **Schedule Trigger:** Runs every hour from 9 AM to 6 PM.

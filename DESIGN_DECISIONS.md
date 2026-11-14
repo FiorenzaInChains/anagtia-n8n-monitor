@@ -10,6 +10,7 @@ In many companies, service monitoring is handled by complex scripts or separate 
 - **Anti-False Alarms:** The `Wait 60s` and "Retry" logic prevents alert fatigue for the IT department caused by temporary network hiccups.
 - **Ready-to-use (Low-Code):** Anyone can download the JSON and, by just changing the list of programs, have a working monitoring system. No programming skills required.
 - **Flexible & Parallel Alerting Channels:** The alerting logic is decoupled from the monitoring logic. Companies can easily replace or add parallel notification nodes (e.g., sending an alert to both Email and Slack/Teams simultaneously), adapting the system perfectly to their internal communication workflows.
+- **Granular Alerting (Static & Dynamic):** The current PoC uses static alerting (fixed email addresses). However, the alerting logic is decoupled from the monitoring logic, making the architecture ready for dynamic routing. By simply passing a `recipient` email address within the loop's payload, the notification node can automatically target the specific team responsible (e.g., DBAs, Web Developers), preventing alert fatigue. Furthermore, it can be extended to external customer-facing communications (like Status Page updates) during critical outages.
 
 ## 2. Comparison with other solutions
 
