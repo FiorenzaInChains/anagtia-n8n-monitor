@@ -32,6 +32,7 @@ Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real en
 
 ## 🔮 Future Improvements
 - **Local AI Integration:** The modular architecture of this workflow is designed to easily integrate a local AI model (e.g., via Ollama). The next step will be to analyze the error logs automatically and use the AI to generate a detailed "root cause" explanation inside the alert email, helping the IT team troubleshoot faster.
+- **Dual-Version Strategy:** In a future release, I plan to offer two versions of this workflow: a lightweight "Classic" version (current) for standard setups, and an "AI-Enhanced" version for environments with enough resources to run local LLMs.
 
 ## 📸 Workflow Screenshot
 ![Workflow Screenshot](service.png)
