@@ -84,6 +84,7 @@ Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real en
 
 ## ☁️ Cloud Deployment
 This workflow is designed to be Cloud-ready. It can be deployed on any Cloud provider (AWS, GCP, Azure) or VPS by running n8n in a Docker container. The workflow itself is agnostic to the hosting environment, allowing the orchestration of both Cloud-native APIs (HTTP) and private Cloud VMs (SSH) from a single centralized dashboard.
+*For a detailed guide on how to deploy this framework on Cloud providers (Docker, PaaS, Kubernetes), please read the [Cloud Deployment Guide](CLOUD_DEPLOYMENT.md).*
 
 ## 🔮 Future Improvements
 - **Local AI Integration:** The modular architecture of this workflow is designed to easily integrate a local AI model (e.g., via Ollama). The next step will be to analyze the error logs automatically and use the AI to generate a detailed "root cause" explanation inside the alert email, helping the IT team troubleshoot faster.
