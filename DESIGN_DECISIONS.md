@@ -1,10 +1,11 @@
-# Architecture & Design Decisions
+# 🐍 Anagtia - Architecture & Design Decisions
 
-This document explains the rationale behind the architectural choices made for this Proof of Concept (PoC). 
+This document explains the rationale behind the architectural choices made for Anagtia (Proof of Concept). Just as the ancient Samnite goddess protected her people, this architecture is designed to be a robust, silent guardian for IT infrastructures.
 
 ## 1. Why this project has value?
 In many companies, service monitoring is handled by complex scripts or separate software that do only one thing. The value of this PoC is not just the monitoring itself, but the creation of a **Modular and Universal Framework** within n8n.
 
+- **Identity & Roots (Anagtia):** The project is named after Anagtia, the Samnite goddess of protection. This is not just an aesthetic choice, but represents the philosophy of the system: a silent guardian that watches over and intervenes to protect the infrastructure.
 - **Zero Silos:** The monitoring is not a closed box. It lives inside the same tool the company can use for dozens of other automations. If a service goes down tomorrow, the system could easily be extended to open a Jira ticket or restart the service, all within the same flow.
 - **Dual Nature:** It combines Web checks (HTTP) and Server checks (SSH) in a single architecture. Standard n8n templates usually only do one of the two.
 - **Anti-False Alarms:** The `Wait 60s` and "Retry" logic prevents alert fatigue for the IT department caused by temporary network hiccups.
@@ -41,4 +42,5 @@ A: Very little. The structure is 100% ready. It only requires: 1) Inserting the 
 
 ## 4. Architectural Extensibility (Future AI)
 The choice to use a modular Loop and Switch architecture was not accidental. By isolating the monitoring logic from the alerting logic, the workflow is "AI-ready". In the future, a local AI model (e.g., via Ollama) can be inserted just before the notification nodes to analyze the error logs and generate a root-cause explanation, without needing to rewrite the core monitoring logic.
+
 *Note on Versioning:* The current V1 is the definitive core framework. A future V2 (AI-Enhanced) will not replace V1, but will serve as an optional, specialized edition for companies that want to add local AI diagnostics. Core modular features (like dynamic routing or Slack integration) require zero-code changes in V1 and do not justify a new version.

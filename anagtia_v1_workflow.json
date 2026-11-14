@@ -1,5 +1,5 @@
 {
-  "name": "Service_Monitor_Bot",
+  "name": "🐍 Anagtia - Service Monitor",
   "nodes": [
     {
       "parameters": {
@@ -389,7 +389,7 @@
     },
     {
       "parameters": {
-        "content": "Project: Service Monitor - Workflow Documentation\n\nOverview:\nThis workflow automatically monitors the health of various company programs (HTTP APIs and SSH services). It runs every hour from 9 AM to 6 PM. If a program fails, it performs a secondary check after 60 seconds to avoid false alarms before sending a notification to the Administration and IT departments.\n\nWorkflow Logic (Step-by-Step):\n\n   1.  DailyCheck (Schedule Trigger): Runs the flow every hour (Cron: 0 0 9-18 * * *).\n\n   2. ListProgram (Code): Creates a dynamic list of programs to monitor. Currently using mock data.\n\n   3. ProgramLoop (Loop Over Items): Processes the list one program at a time to prevent system overload.\n\n   4. RouteHTTP/SSH (Switch): Checks the type field of the current program and routes it to the correct verification branch.\n\n   5 . HTTP Branch:\n - CheckHTTP: Sends a real GET request to the target URL.\n\n- IsHTTPWorking?: Checks if the status code is 200.\n\n - Retry Logic: If it fails, Wait60Sec pauses for 60s, then CheckHTTPRetry tries again. If it fails again, SendAlertHTTP triggers.\n\n   6.  SSH Branch:\n - CheckSSH(Mock): Simulates an SSH command execution.\n\n - IsSSHWorking?: Checks if the status is \"success\".\n\n - Retry Logic: Same as HTTP (Wait60Sec1 ➜ CheckSSH(RetryMock) ➜ SendAlertSSH).\n\n    7. Loop Closure: All final nodes (AllOk, SendAlert...) route back to ProgramLoop so the cycle can process the next program in the list.",
+        "content": "PROJECT: ANAGTIA - WORKFLOW DOCUMENTATION (V1 CLASSIC)\n\nOVERVIEW:\nInspired by the ancient Samnite goddess of protection, Anagtia acts as a silent guardian for IT infrastructures. This workflow automatically monitors the health of various company programs (HTTP APIs and SSH services). It runs every hour from 9 AM to 6 PM. If a program fails, it performs a secondary check after 60 seconds to avoid false alarms before sending a notification to the Administration and IT departments.\n\nWORKFLOW LOGIC (STEP-BY-STEP):\n\nDailyCheck (Schedule Trigger): Runs the flow every hour (Cron: 0 0 9-18 * * *).\n\nListProgram (Code): Creates a dynamic list of programs to monitor. Currently using mock data.\n\nProgramLoop (Loop Over Items): Processes the list one program at a time to prevent system overload.\n\nRouteHTTP/SSH (Switch): Checks the type field of the current program and routes it to the correct verification branch.\n\n  HTTP Branch:\nCheckHTTP: Sends a real GET request to the target URL.\n\nIsHTTPWorking?: Checks if the status code is 200.\n\nRetry Logic: If it fails, Wait60Sec pauses for 60s, then CheckHTTPRetry tries again. If it fails again, SendAlertHTTP triggers.\n\n   SSH Branch:\n\nCheckSSH(Mock): Simulates an SSH command execution.\n\nIsSSHWorking?: Checks if the status is \"success\".\n\nRetry Logic: Same as HTTP (Wait60Sec1, CheckSSH(RetryMock), SendAlertSSH).\n\nLoop Closure: All final nodes (AllOk, SendAlert...) route back to ProgramLoop so the cycle can process the next program in the list.",
         "height": 528,
         "width": 928
       },
@@ -404,16 +404,16 @@
     },
     {
       "parameters": {
-        "content": "Transition to Production (How to replace mock nodes):\n\n1. Replacing SSH Mock:\n- Delete both CheckSSH(Mock) and CheckSSH(RetryMock) nodes.\n\n- Replace them with the native n8n SSH node.\n\n- Configuration: Set the operation to Execute Command. Input the real command (e.g., systemctl is-active [service_name]).\n\n- Credentials: Create an SSH credential with the real server IP, port, and authentication (password or private key).\n\n2. Replacing HTTP Mock URLs:\n\n- Open the ListProgram node and replace the fake URLs (httpbin.org, google.com) with the real corporate API endpoints.\n\n3. Replacing SMTP Credentials:\n\n- In SendAlertHTTP and SendAlertSSH, replace the mock SMTP credentials with the company's real email server credentials.\n\n- Update the \"To Email\" field with the real Administration and IT department addresses.",
+        "content": "TRANSITION TO PRODUCTION (HOW TO REPLACE MOCK NODES)\n\n   REPLACING SSH MOCK:\nDelete both CheckSSH(Mock) and CheckSSH(RetryMock) nodes.\n\nReplace them with the native n8n SSH node.\n\nConfiguration: Set the operation to Execute Command. Input the real command (e.g., systemctl is-active [service_name]).\n\nCredentials: Create an SSH credential with the real server IP, port, and authentication (password or private key).\n\n   REPLACING HTTP MOCK URLS:\n\nOpen the ListProgram node and replace the fake URLs (httpbin.org, google.com) with the real corporate API endpoints.\n\n   REPLACING SMTP CREDENTIALS:\n\nIn SendAlertHTTP and SendAlertSSH, replace the mock SMTP credentials with the company's real email server credentials.\n\nUpdate the \"To Email\" field with the real Administration and IT department addresses (or use the expression for dynamic routing).",
         "height": 336,
-        "width": 832,
+        "width": 928,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1056,
-        464
+        -1152,
+        448
       ],
       "id": "82153ed1-64d1-4ca2-88de-8684b73d7665",
       "name": "Sticky Note1"
@@ -723,12 +723,19 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "ad3e0519-ee89-4756-a3f4-f53f5d4d21ff",
+  "versionId": "239fe0b5-c9e6-4d5a-9ccf-b805058d36ec",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "c8111c6edd7b0544a5d7c526ca4131a11b7ccbe5323720c554ec286b841bdcb1"
   },
   "nodeGroups": [],
   "id": "lKP434Daf2cynbkW",
-  "tags": []
+  "tags": [
+    {
+      "name": "anagtia",
+      "id": "mCZOq1dnFt2sNwI0",
+      "updatedAt": "2026-11-14T10:41:12.832Z",
+      "createdAt": "2026-11-14T10:41:12.832Z"
+    }
+  ]
 }

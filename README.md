@@ -1,6 +1,9 @@
-# n8n Service Monitor - Proof of Concept
+# 🐍 Project Anagtia - Service Monitor (n8n PoC)
 
 This is a personal Proof of Concept (PoC) project created to demonstrate automated service monitoring using n8n. The workflow checks the health of various programs (HTTP APIs and SSH servers) and alerts the IT and Administration departments in case of failures.
+
+> **Why "Anagtia"?**
+> Named after the ancient Samnite goddess of healing and protection (whose sacred animal was the snake), *Anagtia* acts as the silent guardian of your IT infrastructure. Just as the goddess cured and protected her people, this workflow monitors, heals (through alerts), and protects your servers, keeping them safe from unseen failures.
 
 ## 💡 Why this project?
 While tools like Uptime Kuma or UptimeRobot are excellent for basic uptime monitoring, they act as closed silos. This project was built as a **Universal, Modular Framework** within n8n. 
@@ -81,7 +84,7 @@ Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real en
 
 ## 🔮 Future Improvements
 - **Local AI Integration:** The modular architecture of this workflow is designed to easily integrate a local AI model (e.g., via Ollama). The next step will be to analyze the error logs automatically and use the AI to generate a detailed "root cause" explanation inside the alert email, helping the IT team troubleshoot faster.
-- **Dual-Version Strategy (Classic vs AI-Enhanced):** The current V1 (Classic) is the core engine and is already fully modular. Features like Dynamic Alert Routing or sending alerts to Slack/Teams can be achieved by simply changing a field or swapping a node—no new version is needed. The planned V2 (AI-Enhanced) will be an optional version *exclusively* for environments with enough resources to run a local LLM (e.g., Ollama), adding automated root-cause analysis to the alerts.
+- **Dual-Version Strategy (Classic vs AI-Enhanced):** The current V1 (Classic) is the core engine and is already fully modular. Features like Dynamic Alert Routing or sending alerts to Slack/Teams can be achieved by simply changing a field or swapping a node—no new version is needed. The planned V2 (AI-Enhanced) will be an optional version *exclusively* for environments with enough resources to run a local LLM (e.g., via Ollama), adding automated root-cause analysis to the alerts.
 
 ## 📸 Workflow Screenshot
 ![Workflow Screenshot](service.png)
