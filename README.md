@@ -31,7 +31,46 @@ This framework is designed for:
 2. **ListProgram (Code):** Generates a mock list of services to monitor.
 3. **ProgramLoop:** Iterates through the list.
 4. **RouteHTTP/SSH:** Routes the check based on the service type.
-5. **Alerting:** Sends an email notification if the service is still down after the retry.
+5. **Alerting:** Sends a notification if the service is still down after the retry.
+
+## ⚙️ Configuration Example (ListProgram Node)
+
+The `ListProgram` node is the "brain" of the system where you define the services to monitor. You can configure it in two ways depending on your alerting strategy. 
+
+*Note: While this example uses Email for notifications, the `recipient` field can be adapted for any notification channel (e.g., a Slack Channel ID, a Teams Webhook, or a Telegram Chat ID).*
+
+### Option 1: Static Alerting (Current PoC Setup)
+If you want to send all alerts to the same fixed destination (e.g., a generic IT email), simply omit the `recipient` field. You will hardcode the destination directly in your notification nodes (`SendAlertHTTP` and `SendAlertSSH`).
+
+```javascript
+return [
+  {
+    json: {
+      program_name: "Web Portal",
+      type: "http",
+      target: "https://api.example.com/health"
+    }
+  }
+];
+```
+
+### Option 2: Dynamic Alert Routing (Advanced)
+If you want to route alerts to specific teams based on the failing service, add the `recipient` field to the list. 
+
+**Important:** To make this work, you must update the destination field (e.g., "To Email" in the Email node) to use the expression: `{{ $('ProgramLoop').item.json.recipient }}`.
+
+```javascript
+return [
+  {
+    json: {
+      program_name: "Database Server",
+      type: "ssh",
+      target: "systemctl is-active postgresql",
+      recipient: "dba-team@company.com"
+    }
+  }
+];
+```
 
 ## 📌 Transition to Production
 Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real environment:
