@@ -37,3 +37,6 @@ A: Data handling within the Loop. When the HTTP node executes the call, it overw
 
 **Q: How long would it take to move to production?**
 A: Very little. The structure is 100% ready. It only requires: 1) Inserting the real URLs in the List node. 2) Configuring SSH credentials. 3) Inserting the corporate SMTP server for email sending. The rest of the flow remains exactly as it is.
+
+## 4. Architectural Extensibility (Future AI)
+The choice to use a modular Loop and Switch architecture was not accidental. By isolating the monitoring logic from the alerting logic, the workflow is "AI-ready". In the future, a local AI model (e.g., via Ollama) can be inserted just before the notification nodes to analyze the error logs and generate a root-cause explanation, without needing to rewrite the core monitoring logic.
