@@ -25,6 +25,7 @@ This framework is designed for:
 - **Error Handling:** Uses `Continue (using error output)` to ensure the loop never breaks, even if a service is completely unreachable or the email server fails.
 - **Extensible Alerting:** While Email is used in this PoC, the modular architecture allows swapping or running in parallel the notification node (e.g., sending alerts via both Email and Slack/Teams) without changing the core monitoring logic.
 - **Flexible Alerting (Static & Dynamic):** The workflow currently uses static alerting (fixed email addresses in the notification nodes). However, the architecture is designed for **Dynamic Alert Routing**: by simply adding a `recipient` field (e.g., `dba@company.com`) to the `ListProgram` node, the workflow can automatically route alerts to the specific team responsible for the failing service, reducing alert fatigue for others.
+- **Fully Configurable (Zero-Code Maintenance):** The schedule (Cron), retry wait times, and the list of monitored targets can be easily adjusted directly from the n8n visual interface, without touching the underlying logic or writing code.
 
 ## 🛠️ How it works
 1. **Schedule Trigger:** Runs every hour from 9 AM to 6 PM.

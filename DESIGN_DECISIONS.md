@@ -19,7 +19,7 @@ In many companies, service monitoring is handled by complex scripts or separate 
 
 ### B. vs. Python or Bash Scripts
 - **Them:** They are hard to modify. If the company wants to change the schedule or add a check 6 months from now, a developer is needed.
-- **This Project:** It is **visual**. The IT department opens n8n, drags a node, changes a value, and saves. Zero-code maintenance.
+- **This Project:** It is **visual and highly configurable**. The IT department can modify the schedule, change the retry wait time, or add new targets by simply opening n8n, changing a value in the node, and saving. Zero-code maintenance.
 
 ### C. vs. Existing n8n Templates
 - **Them:** Community templates are often monolithic (only HTTP or only Telegram) and lack advanced logic.
