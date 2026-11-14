@@ -16,6 +16,7 @@ Key advantages:
 - **Retry Logic to avoid False Alarms:** If a service fails, the workflow waits 60 seconds and tries again before sending an alert.
 - **Loop Management:** Processes items one by one to prevent system overload.
 - **Error Handling:** Uses `Continue (using error output)` to ensure the loop never breaks, even if a service is completely unreachable or the email server fails.
+- **Extensible Alerting:** While Email is used in this PoC, the modular architecture allows swapping or running in parallel the notification node (e.g., sending alerts via both Email and Slack/Teams) without changing the core monitoring logic.
 
 ## 🛠️ How it works
 1. **Schedule Trigger:** Runs every hour from 9 AM to 6 PM.
