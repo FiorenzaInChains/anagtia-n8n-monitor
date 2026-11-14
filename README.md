@@ -1,8 +1,15 @@
 # n8n Service Monitor - Proof of Concept
 
-This is a personal Proof of Concept (PoC) project created to demonstrate automated service monitoring using n8n. 
+This is a personal Proof of Concept (PoC) project created to demonstrate automated service monitoring using n8n. The workflow checks the health of various programs (HTTP APIs and SSH servers) and alerts the IT and Administration departments in case of failures.
 
-The workflow checks the health of various programs (HTTP APIs and SSH servers) and alerts the IT and Administration departments in case of failures.
+## 💡 Why this project?
+While tools like Uptime Kuma or UptimeRobot are excellent for basic uptime monitoring, they act as closed silos. This project was built as a **Universal, Modular Framework** within n8n. 
+
+Key advantages:
+* **Dual Nature (HTTP + SSH):** Unlike standard templates, it uses a Switch to route checks. It monitors web endpoints (HTTP) and executes real commands on servers (SSH) to verify application health.
+* **Modular & Universal:** Anyone can download the JSON and adapt it to their needs without writing a single line of code. Just change the data in the `ListProgram` node.
+* **Anti-False Alarms:** Integrated retry logic prevents alert fatigue for the IT department.
+* **Self-Hosted & Secure:** Runs entirely on your own infrastructure (Docker), keeping sensitive SSH credentials and data within your network perimeter.
 
 ## 🚀 Features
 - **Dynamic Routing:** Fetches a list of programs and uses a Switch node to route checks to HTTP Request or SSH execution.
@@ -23,6 +30,11 @@ Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real en
 - Replace the mock SMTP credentials with the real corporate email server.
 - Update the URLs in the `ListProgram` node with the real API endpoints.
 
+## 📸 Workflow Screenshot
 ![Workflow Screenshot](service.png)
 
+**Note on the Screenshot:** 
+You might notice that some nodes are grey in the image. This is expected behavior. Because the workflow uses conditional routing (Switch and IF nodes), n8n only executes the specific path required at that moment. Grey nodes simply mean that specific branch was correctly skipped during the test run (e.g., the service was working, so the alert path was not triggered).
+
+---
 *Disclaimer: All company names, URLs, and data in this repository are entirely fictional and for demonstration purposes only.*
