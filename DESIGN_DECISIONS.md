@@ -41,3 +41,4 @@ A: Very little. The structure is 100% ready. It only requires: 1) Inserting the 
 
 ## 4. Architectural Extensibility (Future AI)
 The choice to use a modular Loop and Switch architecture was not accidental. By isolating the monitoring logic from the alerting logic, the workflow is "AI-ready". In the future, a local AI model (e.g., via Ollama) can be inserted just before the notification nodes to analyze the error logs and generate a root-cause explanation, without needing to rewrite the core monitoring logic.
+*Note on Versioning:* The current V1 is the definitive core framework. A future V2 (AI-Enhanced) will not replace V1, but will serve as an optional, specialized edition for companies that want to add local AI diagnostics. Core modular features (like dynamic routing or Slack integration) require zero-code changes in V1 and do not justify a new version.

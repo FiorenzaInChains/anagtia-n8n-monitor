@@ -81,7 +81,7 @@ Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real en
 
 ## 🔮 Future Improvements
 - **Local AI Integration:** The modular architecture of this workflow is designed to easily integrate a local AI model (e.g., via Ollama). The next step will be to analyze the error logs automatically and use the AI to generate a detailed "root cause" explanation inside the alert email, helping the IT team troubleshoot faster.
-- **Dual-Version Strategy:** In a future release, I plan to offer two versions of this workflow: a lightweight "Classic" version (current) for standard setups, and an "AI-Enhanced" version for environments with enough resources to run local LLMs.
+- **Dual-Version Strategy (Classic vs AI-Enhanced):** The current V1 (Classic) is the core engine and is already fully modular. Features like Dynamic Alert Routing or sending alerts to Slack/Teams can be achieved by simply changing a field or swapping a node—no new version is needed. The planned V2 (AI-Enhanced) will be an optional version *exclusively* for environments with enough resources to run a local LLM (e.g., Ollama), adding automated root-cause analysis to the alerts.
 
 ## 📸 Workflow Screenshot
 ![Workflow Screenshot](service.png)
