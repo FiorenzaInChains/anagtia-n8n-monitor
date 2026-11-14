@@ -10,7 +10,7 @@ While tools like Uptime Kuma or UptimeRobot are excellent for basic uptime monit
 
 Key advantages:
 * **Dual Nature (HTTP + SSH):** Unlike standard templates, it uses a Switch to route checks. It monitors web endpoints (HTTP) and executes real commands on servers (SSH) to verify application health.
-* **Modular & Universal:** Anyone can download the JSON and adapt it to their needs without writing a single line of code. Just change the data in the `ListProgram` node.
+* **Modular & Universal:** Anyone can download the [JSON workflow](workflows/anagtia_v1_workflow.json) and adapt it to their needs without writing a single line of code. Just change the data in the `ListProgram` node.
 * **Anti-False Alarms:** Integrated retry logic prevents alert fatigue for the IT department.
 * **Self-Hosted & Secure:** Runs entirely on your own infrastructure (Docker), keeping sensitive SSH credentials and data within your network perimeter.
 
@@ -84,7 +84,7 @@ Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real en
 
 ## ☁️ Cloud Deployment
 This workflow is designed to be Cloud-ready. It can be deployed on any Cloud provider (AWS, GCP, Azure) or VPS by running n8n in a Docker container. The workflow itself is agnostic to the hosting environment, allowing the orchestration of both Cloud-native APIs (HTTP) and private Cloud VMs (SSH) from a single centralized dashboard.
-*For a detailed guide on how to deploy this framework on Cloud providers (Docker, PaaS, Kubernetes), please read the [Cloud Deployment Guide](CLOUD_DEPLOYMENT.md).*
+*For a detailed guide on how to deploy this framework on Cloud providers (Docker, PaaS, Kubernetes), please read the [Cloud Deployment Guide](docs/CLOUD_DEPLOYMENT.md).*
 
 ## 🔮 Future Improvements
 - **Local AI Integration:** The modular architecture of this workflow is designed to easily integrate a local AI model (e.g., via Ollama). The next step will be to analyze the error logs automatically and use the AI to generate a detailed "root cause" explanation inside the alert email, helping the IT team troubleshoot faster.
