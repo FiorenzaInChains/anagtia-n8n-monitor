@@ -26,6 +26,10 @@ In many companies, service monitoring is handled by complex scripts or separate 
 - **Them:** Community templates are often monolithic (only HTTP or only Telegram) and lack advanced logic.
 - **This Project:** It is a tested **universal framework** that solves advanced technical issues (like data overwriting in loops) to ensure alerts always contain the exact name of the failing program.
 
+### D. Cloud-Native Architecture
+- **Them:** Traditional monitoring tools are often tied to a specific infrastructure or require complex agents to be installed on every server.
+- **This Project:** It is a **Cloud-ready orchestrator**. By running n8n in a Docker container (on any Cloud provider), the workflow acts as a centralized control plane. It can monitor Cloud APIs and private servers (via SSH) simultaneously, without the need to deploy agents on the target machines.
+
 ## 3. Technical Q&A
 
 **Q: Why n8n and not a custom script?**

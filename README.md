@@ -82,6 +82,9 @@ Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real en
 - Replace the mock SMTP credentials with the real corporate email server.
 - Update the URLs in the `ListProgram` node with the real API endpoints.
 
+## ☁️ Cloud Deployment
+This workflow is designed to be Cloud-ready. It can be deployed on any Cloud provider (AWS, GCP, Azure) or VPS by running n8n in a Docker container. The workflow itself is agnostic to the hosting environment, allowing the orchestration of both Cloud-native APIs (HTTP) and private Cloud VMs (SSH) from a single centralized dashboard.
+
 ## 🔮 Future Improvements
 - **Local AI Integration:** The modular architecture of this workflow is designed to easily integrate a local AI model (e.g., via Ollama). The next step will be to analyze the error logs automatically and use the AI to generate a detailed "root cause" explanation inside the alert email, helping the IT team troubleshoot faster.
 - **Dual-Version Strategy (Classic vs AI-Enhanced):** The current V1 (Classic) is the core engine and is already fully modular. Features like Dynamic Alert Routing or sending alerts to Slack/Teams can be achieved by simply changing a field or swapping a node—no new version is needed. The planned V2 (AI-Enhanced) will be an optional version *exclusively* for environments with enough resources to run a local LLM (e.g., via Ollama), adding automated root-cause analysis to the alerts.
