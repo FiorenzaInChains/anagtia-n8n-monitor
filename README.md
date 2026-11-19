@@ -1,100 +1,97 @@
 # 🐍 Project Anagtia - Service Monitor (n8n PoC)
 
-This is a personal Proof of Concept (PoC) project created to demonstrate automated service monitoring using n8n. The workflow checks the health of various programs (HTTP APIs and SSH servers) and alerts the IT and Administration departments in case of failures.
+This is a Proof of Concept (PoC) project demonstrating automated, dual-protocol service monitoring and incident routing built on **n8n**. The workflow checks the health of both **HTTP APIs** and **SSH server services**, filters transient glitches using a collective retry pass, and delivers team-routed HTML digest alerts.
 
 > **Why "Anagtia"?**
-> Named after the ancient Samnite goddess of healing and protection (whose sacred animal was the snake), *Anagtia* acts as the silent guardian of your IT infrastructure. Just as the goddess cured and protected her people, this workflow monitors, heals (through alerts), and protects your servers, keeping them safe from unseen failures.
+> Named after the ancient Samnite goddess of healing and protection (whose sacred animal was the snake), *Anagtia* acts as the silent guardian of your IT infrastructure—monitoring services, filtering noise, and notifying the right teams before minor issues turn into prolonged outages.
 
 ## 💡 Why this project?
-While tools like Uptime Kuma or UptimeRobot are excellent for basic uptime monitoring, they act as closed silos. This project was built as a **Universal, Modular Framework** within n8n. 
+While standalone tools like Uptime Kuma or UptimeRobot are great for basic uptime checks, they operate as closed silos. **Anagtia** models monitoring as a **modular orchestration workflow** inside n8n, keeping health checks in the same platform used for ticketing, chatops, and automated remediation.
 
-Key advantages:
-* **Dual Nature (HTTP + SSH):** Unlike standard templates, it uses a Switch to route checks. It monitors web endpoints (HTTP) and executes real commands on servers (SSH) to verify application health.
-* **Modular & Universal:** Anyone can download the [JSON workflow](workflows/anagtia_v1_workflow.json) and adapt it to their needs without writing a single line of code. Just change the data in the `ListProgram` node.
-* **Anti-False Alarms:** Integrated retry logic prevents alert fatigue for the IT department.
-* **Self-Hosted & Secure:** Runs entirely on your own infrastructure (Docker), keeping sensitive SSH credentials and data within your network perimeter.
+Key architectural highlights:
+* **Dual-Protocol Routing (HTTP + SSH):** Uses a Switch node (`RouteCheckType`) to check both web endpoints (HTTP status codes) and server-level services (SSH commands, mocked in this PoC).
+* **Collective Anti-Flapping Retry:** Instead of pausing 60 seconds inside a sequential loop for every single failed host, all targets are evaluated first, and a **single collective 60-second wait** (`Wait60Sec`) runs only for failed items before re-checking them in `RetryLoop`.
+* **Team-Based Digest Alerting (Anti-Alert Storm):** Confirmed failures are grouped by `owner_team` (or explicit `recipient`) inside `BuildAlertDigest`, sending **one unified HTML summary table per team** instead of flooding inboxes during a broad outage.
+* **Resilient Result Normalization:** `CheckHTTP` enables `fullResponse: true`, `neverError: true`, and a `10000ms` timeout so HTTP 4xx/5xx responses and slow endpoints are captured cleanly without skipping retry logic, while `RecordCheckResult` preserves original metadata across error branches.
+* **Self-Hosted & Portable:** Built with standard n8n nodes so you can download the [JSON workflow](workflows/anagtia_v1_workflow.json), import it, and test both HTTP and SSH flows immediately.
 
 ## 🎯 Target Audience
-This framework is designed for:
-- **Companies migrating to n8n:** Organizations looking to consolidate their IT tools (including monitoring) into a single, open-source, self-hosted automation platform to reduce costs and maintenance overhead.
-- **SMBs (Small and Medium Businesses):** Looking for a cost-effective, self-hosted monitoring solution without enterprise software costs.
-- **Mixed Infrastructures:** Companies that need to monitor both web services (HTTP) and internal servers (SSH) from a single visual dashboard.
-- **IT Teams preferring Low-Code:** Who want a visual, easily maintainable solution instead of complex custom scripts.
-
-## 🚀 Features
-- **Dynamic Routing:** Fetches a list of programs and uses a Switch node to route checks to HTTP Request or SSH execution.
-- **Retry Logic to avoid False Alarms:** If a service fails, the workflow waits 60 seconds and tries again before sending an alert.
-- **Loop Management:** Processes items one by one to prevent system overload.
-- **Error Handling:** Uses `Continue (using error output)` to ensure the loop never breaks, even if a service is completely unreachable or the email server fails.
-- **Extensible Alerting:** While Email is used in this PoC, the modular architecture allows swapping or running in parallel the notification node (e.g., sending alerts via both Email and Slack/Teams) without changing the core monitoring logic.
-- **Flexible Alerting (Static & Dynamic):** The workflow currently uses static alerting (fixed email addresses in the notification nodes). However, the architecture is designed for **Dynamic Alert Routing**: by simply adding a `recipient` field (e.g., `dba@company.com`) to the `ListProgram` node, the workflow can automatically route alerts to the specific team responsible for the failing service, reducing alert fatigue for others.
-- **Fully Configurable (Zero-Code Maintenance):** The schedule (Cron), retry wait times, and the list of monitored targets can be easily adjusted directly from the n8n visual interface, without touching the underlying logic or writing code.
+* **Teams adopting n8n:** Organizations consolidating internal IT automations and lightweight monitoring into a single self-hosted tool.
+* **SMBs & Mixed Infrastructures:** Teams needing a visual, low-code monitor covering both HTTP APIs and internal server services without complex custom scripts.
 
 ## 🛠️ How it works
-1. **Schedule Trigger:** Runs every hour from 9 AM to 6 PM.
-2. **ListProgram (Code):** Generates a mock list of services to monitor.
-3. **ProgramLoop:** Iterates through the list.
-4. **RouteHTTP/SSH:** Routes the check based on the service type.
-5. **Alerting:** Sends a notification if the service is still down after the retry.
+1. **HourlyCheck (Schedule Trigger):** Runs every hour 24/7 (`0 0 * * * *`).
+2. **ListProgram (Code):** Provides the mock service inventory with `program_name`, `type`, `target`, `owner_team`, and `severity`.
+3. **Initial Check Pass (`ProgramLoop` → `RouteCheckType` → `RecordCheckResult`):** Evaluates all HTTP and SSH (mock) targets quickly with no in-loop sleep, normalizing every outcome into a unified schema (`is_up`, `status_code`, `error_detail`).
+4. **FilterFailed & Collective Wait:** If all services are healthy, the run finishes cleanly (`AllOk`). If any failed, `Wait60Sec` pauses once for 60 seconds.
+5. **Retry Pass (`RetryLoop` → `RouteRetryType` → `RecordRetryResult`):** Re-checks only the failed HTTP/SSH services.
+6. **FilterStillDown → BuildAlertDigest → SendUnifiedAlert:** Filters out recovered services (`RecoveredAfterRetry`), groups confirmed outages by team routing matrix, and dispatches one HTML digest email per team.
 
-## ⚙️ Configuration Example (ListProgram Node)
+## ⚙️ Configuration Example (`ListProgram` Node)
 
-The `ListProgram` node is the "brain" of the system where you define the services to monitor. You can configure it in two ways depending on your alerting strategy. 
+In this PoC, monitored services are defined in `ListProgram` so the workflow works out-of-the-box upon import. For production, swap this node with Google Sheets, PostgreSQL, or an external JSON inventory.
 
-*Note: While this example uses Email for notifications, the `recipient` field can be adapted for any notification channel (e.g., a Slack Channel ID, a Teams Webhook, or a Telegram Chat ID).*
-
-### Option 1: Static Alerting (Current PoC Setup)
-If you want to send all alerts to the same fixed destination (e.g., a generic IT email), simply omit the `recipient` field. You will hardcode the destination directly in your notification nodes (`SendAlertHTTP` and `SendAlertSSH`).
+*Note: While `SendUnifiedAlert` uses Email in this PoC, `BuildAlertDigest` can easily be wired to Slack, Microsoft Teams, or Telegram nodes in parallel.*
 
 ```javascript
 return [
   {
     json: {
-      program_name: "Web Portal",
+      program_name: "Company Website",
       type: "http",
-      target: "https://api.example.com/health"
+      target: "https://www.google.com",
+      owner_team: "web-ops",
+      severity: "warning"
     }
-  }
-];
-```
-
-### Option 2: Dynamic Alert Routing (Advanced)
-If you want to route alerts to specific teams based on the failing service, add the `recipient` field to the list. 
-
-**Important:** To make this work, you must update the destination field (e.g., "To Email" in the Email node) to use the expression: `{{ $('ProgramLoop').item.json.recipient }}`.
-
-```javascript
-return [
+  },
   {
     json: {
-      program_name: "Database Server",
+      program_name: "Management API",
+      type: "http",
+      target: "https://httpbin.org/status/500",
+      owner_team: "backend",
+      severity: "critical"
+    }
+  },
+  {
+    json: {
+      program_name: "Local Database Service",
       type: "ssh",
       target: "systemctl is-active postgresql",
-      recipient: "dba-team@company.com"
+      owner_team: "dba",
+      severity: "critical",
+      recipient: "oncall-dba@example.it" // Optional: overrides default team routing
     }
   }
 ];
 ```
 
 ## 📌 Transition to Production
-Currently, the SSH nodes and SMTP credentials are mocked. To use it in a real environment:
-- Replace the `CheckSSH(Mock)` nodes with the native n8n SSH node (using real server IP, port, and private key/password).
-- Replace the mock SMTP credentials with the real corporate email server.
-- Update the URLs in the `ListProgram` node with the real API endpoints.
+Currently, SSH checks and SMTP credentials are mocked for safe local testing. To adapt this PoC to a real environment:
+- **SSH Checks:**
+  - *Single server:* Replace `CheckSSH(Mock)` and `CheckSSH(RetryMock)` with n8n's native SSH node (`Execute Command`) and check `code === 0` inside `RecordCheckResult` / `RecordRetryResult`.
+  - *Multi-host fleet:* Because n8n's native SSH node binds to one static credential per node, use an `Execute Command` bastion/Ansible runner with dedicated non-root monitoring keys, or expose authenticated HTTP healthcheck agents over your internal VPN.
+- **Inventory:** Replace `ListProgram` with an external source (PostgreSQL, Google Sheets, or CMDB API) for non-developer maintenance.
+- **Notifications:** Configure `SendUnifiedAlert` with corporate STARTTLS/TLS SMTP credentials (and valid SPF/DKIM records), or add Slack/Teams nodes.
+
+## ⚠️ Known Limitations (PoC Scope)
+To keep this repository transparent and engineering-accurate, please note the following PoC boundaries:
+* **Mocked SSH Execution:** `CheckSSH(Mock)` simulates a healthy response (`"success"`). To test the SSH retry and alert path locally, change `"success"` to `"failed"` in `CheckSSH(Mock)` and `CheckSSH(RetryMock)`.
+* **Stateless Monitoring (No Deduplication):** Without an external state store (Redis/PostgreSQL), a service that stays down across multiple consecutive runs will trigger an alert on each run, and automatic "Recovered" notifications are not sent once it comes back online.
+* **Code-Based PoC Inventory:** `ListProgram` uses a JavaScript Code node for zero-dependency portability rather than an external database.
 
 ## ☁️ Cloud Deployment
-This workflow is designed to be Cloud-ready. It can be deployed on any Cloud provider (AWS, GCP, Azure) or VPS by running n8n in a Docker container. The workflow itself is agnostic to the hosting environment, allowing the orchestration of both Cloud-native APIs (HTTP) and private Cloud VMs (SSH) from a single centralized dashboard.
-*For a detailed guide on how to deploy this framework on Cloud providers (Docker, PaaS, Kubernetes), please read the [Cloud Deployment Guide](docs/CLOUD_DEPLOYMENT.md).*
+Anagtia can run on Docker, PaaS (Cloud Run, AWS Fargate), Kubernetes, or n8n Cloud. For persistence setup (`PostgreSQL` + `N8N_ENCRYPTION_KEY`) and network hardening (VPN, least-privilege access, firewall whitelisting), see the [Cloud Deployment Guide](docs/CLOUD_DEPLOYMENT.md).
 
 ## 🔮 Future Improvements
-- **Local AI Integration:** The modular architecture of this workflow is designed to easily integrate a local AI model (e.g., via Ollama). The next step will be to analyze the error logs automatically and use the AI to generate a detailed "root cause" explanation inside the alert email, helping the IT team troubleshoot faster.
-- **Dual-Version Strategy (Classic vs AI-Enhanced):** The current V1 (Classic) is the core engine and is already fully modular. Features like Dynamic Alert Routing or sending alerts to Slack/Teams can be achieved by simply changing a field or swapping a node—no new version is needed. The planned V2 (AI-Enhanced) will be an optional version *exclusively* for environments with enough resources to run a local LLM (e.g., via Ollama), adding automated root-cause analysis to the alerts.
+- **Stateful Deduplication & Recovery Alerts:** Persist service state (`UP`/`DOWN` + `last_alerted_at`) in Redis or PostgreSQL to suppress duplicate hourly alerts and notify teams upon recovery.
+- **Context-Aware AI Diagnostics (Optional V2):** Integrate a local LLM (e.g., via Ollama) **only after** capturing real diagnostic context (sanitized error payloads or tailed service logs), running AI enrichment asynchronously under a strict timeout so critical alerts are never delayed.
 
 ## 📸 Workflow Screenshot
 ![Workflow Screenshot](service.png)
 
-**Note on the Screenshot:** 
-You might notice that some nodes are grey in the image. This is expected behavior. Because the workflow uses conditional routing (Switch and IF nodes), n8n only executes the specific path required at that moment. Grey nodes simply mean that specific branch was correctly skipped during the test run (e.g., the service was working, so the alert path was not triggered).
+**Note on the Screenshot:**
+Greyed-out nodes in n8n execution views represent conditional branches that were correctly skipped during that test run (for example, `RecoveredAfterRetry` when services remained down, or `AllOk` when at least one target failed).
 
 ---
-*Disclaimer: All company names, URLs, and data in this repository are entirely fictional and for demonstration purposes only.*
+*Disclaimer: All company names, URLs, and email addresses in this repository are entirely fictional and for demonstration purposes only.*

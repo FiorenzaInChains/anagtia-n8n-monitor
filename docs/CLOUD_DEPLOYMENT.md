@@ -1,29 +1,26 @@
 # ☁️ Cloud Deployment Guide
 
-Anagtia is designed to be completely Cloud-ready. Because it is built on n8n, the workflow is host-agnostic: it can run on your local machine for testing, or on a Cloud infrastructure for 24/7 production monitoring.
+Anagtia is host-agnostic and runs anywhere n8n can run in Docker. Below are the recommended deployment topologies and mandatory security controls for moving beyond local testing.
 
-Here are the most common deployment strategies:
+## 1. Deployment Options
 
-## 1. VPS with Docker (Recommended for full control)
-Deploying n8n on a Virtual Private Server (VPS) via Docker is the most cost-effective and flexible approach. 
-*   **Providers:** DigitalOcean, Hetzner, AWS EC2, Google Compute Engine.
-*   **How it works:** You spin up a Linux server, install Docker, and run the official n8n Docker image. The workflow then lives on the server and executes autonomously via the internal Cron scheduler.
-*   **Network Access:** To allow Anagtia to monitor internal/private servers via SSH, the VPS must be connected to the company network via a VPN (e.g., WireGuard or Tailscale).
+### VPS with Docker Compose (Recommended for SMBs)
+* **Providers:** Hetzner, DigitalOcean, AWS EC2, Google Compute Engine.
+* **Setup:** Run the official `n8nio/n8n` container behind a TLS reverse proxy (Caddy, Traefik, or Nginx) backed by PostgreSQL.
+* **Private Network Access:** Connect the VPS to your internal servers over a private mesh VPN (**WireGuard** or **Tailscale**) rather than exposing internal SSH/HTTP ports to the public internet.
 
-## 2. Serverless Containers / PaaS (For scalability)
-For a modern serverless approach, you can deploy the n8n container on managed platforms.
-*   **Providers:** Google Cloud Run, AWS Fargate, Azure Container Apps.
-*   **How it works:** You push the Docker image to the platform, and it handles the scaling automatically. 
-*   **⚠️ Critical Note on Persistence:** In serverless environments, containers are ephemeral (they can scale to zero). You **must** connect an external database (e.g., PostgreSQL on Supabase or Cloud SQL) to persist workflow data and executions across container restarts.
+### Serverless Containers / PaaS
+* **Providers:** Google Cloud Run, AWS Fargate, Azure Container Apps.
+* **⚠️ Critical Persistence Requirements:**
+  1. Connect an external **PostgreSQL** database so workflows and execution history survive container restarts.
+  2. Set a static **`N8N_ENCRYPTION_KEY`** environment variable stored in your Cloud Secret Manager. Without a fixed encryption key, n8n generates a random key on startup, making all saved SMTP/API credentials unreadable after the next deployment.
+  3. Ensure the container has a scheduled/always-on trigger strategy (serverless scale-to-zero containers will not fire internal n8n Cron triggers unless kept warm or triggered externally via Cloud Scheduler -> n8n Webhook).
 
-## 3. Kubernetes (Enterprise-grade)
-If the company already uses Kubernetes, n8n can be deployed via the official Helm chart. This ensures high availability and horizontal scaling, though it is overkill for a small number of monitors.
+### Kubernetes
+* Deploy using the community/official n8n Helm chart with PostgreSQL and Redis (queue mode) if scaling to high execution volumes.
 
-## 4. n8n Cloud (SaaS - Fully Managed)
-If the company does not want to manage any infrastructure, they can use **n8n Cloud**, the official managed service provided by the n8n team. 
-*   **Pros:** Zero maintenance, automatic updates, and built-in backups. 
-*   **Cons:** It is a paid subscription, and the data resides on n8n's servers rather than the company's private network.
-
-## 🔒 Security Considerations
-*   **Environment Variables:** Store SMTP passwords, SSH keys, and API tokens in n8n's encrypted credential store, never in plain text.
-*   **Network:** Ensure the Cloud instance has a static IP (or a VPN) so it can be whitelisted by the internal firewalls of the monitored servers.
+## 2. Mandatory Security & Hardening Checklist
+* **Protect the n8n Control Plane:** Never expose the n8n UI publicly without HTTPS, strong authentication/2FA (or SSO), and IP allowlisting / VPN-only access. Remember that n8n's `Code` node executes arbitrary JavaScript on the host container—compromised editor access equals Remote Code Execution.
+* **Least-Privilege Monitoring Access (Avoid Root SSH):** Do not grant `root` SSH access or password authentication to n8n. Prefer read-only HTTP healthcheck endpoints secured with API keys or mTLS over VPN. If SSH is strictly required, use dedicated Ed25519 keys, a non-privileged monitoring user, and `sudoers` / `ForceCommand` restricted to read-only status commands.
+* **Firewall & IP Whitelisting:** Restrict target server firewalls so healthcheck ports only accept traffic from the n8n worker's static VPN/egress IP.
+* **Email Security:** Configure SMTP with STARTTLS/TLS (port 587/465) and verify SPF, DKIM, and DMARC records on your sender domain so alerts are not rejected or flagged as spam.
