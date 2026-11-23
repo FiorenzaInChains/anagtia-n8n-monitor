@@ -13,7 +13,7 @@ Key architectural highlights:
 * **Collective Anti-Flapping Retry:** Instead of pausing 60 seconds inside a sequential loop for every single failed host, all targets are evaluated first, and a **single collective 60-second wait** (`Wait60Sec`) runs only for failed items before re-checking them in `RetryLoop`.
 * **Team-Based Digest Alerting (Anti-Alert Storm):** Confirmed failures are grouped by `owner_team` (or explicit `recipient`) inside `BuildAlertDigest`, sending **one unified HTML summary table per team** instead of flooding inboxes during a broad outage.
 * **Resilient Result Normalization:** `CheckHTTP` enables `fullResponse: true`, `neverError: true`, and a `10000ms` timeout so HTTP 4xx/5xx responses and slow endpoints are captured cleanly without skipping retry logic, while `RecordCheckResult` preserves original metadata across error branches.
-* **Self-Hosted & Portable:** Built with standard n8n nodes so you can download the [JSON workflow](workflows/anagtia_v1_workflow.json), import it, and test both HTTP and SSH flows immediately.
+* **Self-Hosted & Portable:** Built with standard n8n nodes so you can download the [JSON workflow](workflows/anagtia_v1.1_workflow.json), import it, and test both HTTP and SSH flows immediately.
 
 ## 🎯 Target Audience
 * **Teams adopting n8n:** Organizations consolidating internal IT automations and lightweight monitoring into a single self-hosted tool.
@@ -82,6 +82,8 @@ To keep this repository transparent and engineering-accurate, please note the fo
 
 ## ☁️ Cloud Deployment
 Anagtia can run on Docker, PaaS (Cloud Run, AWS Fargate), Kubernetes, or n8n Cloud. For persistence setup (`PostgreSQL` + `N8N_ENCRYPTION_KEY`) and network hardening (VPN, least-privilege access, firewall whitelisting), see the [Cloud Deployment Guide](docs/CLOUD_DEPLOYMENT.md).
+
+For the architectural rationale and trade-offs behind this workflow, see [Architecture & Design Decisions](docs/DESIGN_DECISIONS.md).
 
 ## 🔮 Future Improvements
 - **Stateful Deduplication & Recovery Alerts:** Persist service state (`UP`/`DOWN` + `last_alerted_at`) in Redis or PostgreSQL to suppress duplicate hourly alerts and notify teams upon recovery.
