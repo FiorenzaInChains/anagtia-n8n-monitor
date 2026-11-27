@@ -15,10 +15,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.4,
       "position": [
-        2016,
-        1472
+        4608,
+        3648
       ],
-      "id": "4cc6f2e3-4a04-4824-8932-8fec5b137b22",
+      "id": "e1dddcce-cb47-4e85-be64-3ed94692c62a",
       "name": "HourlyCheck"
     },
     {
@@ -28,10 +28,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2240,
-        1472
+        4832,
+        3648
       ],
-      "id": "725299f3-1112-4001-9c40-3bef6b3cd475",
+      "id": "f0f189d8-35d4-4206-8f7c-9a6b14c00b00",
       "name": "ListProgram"
     },
     {
@@ -41,10 +41,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2464,
-        1472
+        5056,
+        3648
       ],
-      "id": "df6a21af-4c79-4685-8f4d-101a663bf8c1",
+      "id": "87996e1d-a232-4d42-b3b3-3dbbe5ff3f90",
       "name": "ProgramLoop"
     },
     {
@@ -103,10 +103,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.5,
       "position": [
-        2704,
-        1632
+        5296,
+        3808
       ],
-      "id": "541934ff-9f14-411a-85cd-f167a75924d1",
+      "id": "915dc41b-fb2f-4e3b-8f05-25155384e32d",
       "name": "RouteCheckType"
     },
     {
@@ -125,10 +125,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        2944,
-        1536
+        5536,
+        3712
       ],
-      "id": "e0b6fdf7-b90c-4ca3-a27b-d388b23444a0",
+      "id": "dcc73075-a790-4b32-ba94-d56577a27d72",
       "name": "CheckHTTP",
       "onError": "continueErrorOutput",
       "notes": "fullResponse=true exposes statusCode; neverError=true prevents 4xx/5xx from throwing before normalization; timeout=10000ms prevents hanging checks."
@@ -141,10 +141,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2944,
-        1744
+        5536,
+        3936
       ],
-      "id": "c68671c3-8652-4074-ad50-efc952ab9cf4",
+      "id": "f88ba028-f3aa-4201-a820-27865cc23d40",
       "name": "CheckSSH(Mock)",
       "onError": "continueErrorOutput",
       "notes": "Mock SSH check. Uses .first() on ProgramLoop (safe for batchSize=1 across error outputs)."
@@ -156,10 +156,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3184,
-        1632
+        5776,
+        3808
       ],
-      "id": "97609d2d-ad44-4f01-ae4a-bbbc93b1af1d",
+      "id": "4ea56140-df1d-4d75-8920-d7bb245b0cba",
       "name": "RecordCheckResult"
     },
     {
@@ -189,10 +189,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        2704,
-        1280
+        5296,
+        3088
       ],
-      "id": "3d7df936-9bf1-4df5-a77a-2a5f9df2c9c5",
+      "id": "2c863571-3864-4514-951c-a69a65fe204f",
       "name": "FilterFailed"
     },
     {
@@ -200,10 +200,10 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2944,
-        1376
+        5536,
+        3200
       ],
-      "id": "8d6db1d6-7055-4995-a341-dfc5d12e34c4",
+      "id": "d48ec81e-5f46-4760-ac93-0f1c32ba9d64",
       "name": "AllOk"
     },
     {
@@ -213,10 +213,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2944,
-        1168
+        5536,
+        2960
       ],
-      "id": "86c409c7-f3f0-4b5a-88d7-b6a686baf4d8",
+      "id": "51a2479e-1f54-404a-a859-b05f08498e55",
       "name": "Wait60Sec",
       "webhookId": "e5d40346-a571-4138-8599-241012987f26",
       "notes": "Single collective 60s wait for all failed services, avoiding N * 60s sequential delays."
@@ -228,10 +228,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        3184,
-        1168
+        5776,
+        2960
       ],
-      "id": "27f5bae0-f477-4fee-9f3d-440e7f8c55a4",
+      "id": "f2a3cd0e-3639-49d4-ba2a-22b1beb8139f",
       "name": "RetryLoop"
     },
     {
@@ -290,10 +290,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.5,
       "position": [
-        3424,
-        1328
+        6016,
+        3120
       ],
-      "id": "e04ad0bb-95dc-4e1a-968e-f481f5001e9a",
+      "id": "027200c5-e577-4c7b-bf63-e04a35a1db15",
       "name": "RouteRetryType"
     },
     {
@@ -312,10 +312,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        3664,
-        1232
+        6256,
+        3024
       ],
-      "id": "c59ceb8c-afe6-44a1-8192-4174d28c46a8",
+      "id": "bc069983-6244-46bc-9cd7-7b2fa2d32f2a",
       "name": "CheckHTTPRetry",
       "onError": "continueErrorOutput"
     },
@@ -327,10 +327,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3664,
-        1440
+        6256,
+        3232
       ],
-      "id": "bf86e221-26d7-48d3-8ca2-39650ba132d7",
+      "id": "22e26c3e-b9d7-4f78-ae74-218a79c05501",
       "name": "CheckSSH(RetryMock)",
       "onError": "continueErrorOutput"
     },
@@ -341,10 +341,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3904,
-        1328
+        6496,
+        3120
       ],
-      "id": "67540dc5-54d6-4fa8-b19a-d3bab3c69746",
+      "id": "b4a89921-1344-4f0f-9ccc-324938c7fabf",
       "name": "RecordRetryResult"
     },
     {
@@ -374,10 +374,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        3424,
-        992
+        6016,
+        2512
       ],
-      "id": "22761152-faf7-46c8-bd08-668605fdbbe1",
+      "id": "e36250e1-800f-4bd0-9e8c-ae05528aef5d",
       "name": "FilterStillDown"
     },
     {
@@ -385,28 +385,28 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3664,
-        1088
+        6256,
+        2608
       ],
-      "id": "f8aa19c1-b38b-47e0-952a-d66b34e104eb",
+      "id": "969db38f-9843-45f2-b96b-8d93a7b82d79",
       "name": "RecoveredAfterRetry"
     },
     {
       "parameters": {
-        "jsCode": "// Team-based Routing Matrix (Dynamic Alert Routing + Digest Aggregation)\n// Groups all confirmed HTTP & SSH outages by team/recipient so a broad outage\n// sends 1 digest email per team instead of flooding mailboxes.\n\nconst TEAM_ROUTING = {\n  backend: \"backend-team@example.it, it@example.it\",\n  dba: \"dba-team@example.it, it@example.it\",\n  \"web-ops\": \"webops@example.it, it@example.it\",\n  default: \"admin@example.it, it@example.it\"\n};\n\nconst items = $input.all().map(i => i.json);\nif (items.length === 0) return [];\n\nconst checkedAt = typeof $now?.toFormat === \"function\"\n  ? $now.toFormat(\"dd/MM/yyyy HH:mm\")\n  : new Date().toISOString().slice(0, 16).replace(\"T\", \" \");\n\nconst groups = {};\nfor (const svc of items) {\n  const toEmail = svc.recipient || TEAM_ROUTING[svc.owner_team] || TEAM_ROUTING.default;\n  const team = svc.owner_team || \"general\";\n  const key = `${team}::${toEmail}`;\n  if (!groups[key]) {\n    groups[key] = { team, to_email: toEmail, services: [] };\n  }\n  groups[key].services.push(svc);\n}\n\nconst escapeHtml = (str) => String(str ?? \"\")\n  .replace(/&/g, \"&amp;\")\n  .replace(/</g, \"&lt;\")\n  .replace(/>/g, \"&gt;\");\n\nreturn Object.values(groups).map(group => {\n  const hasCritical = group.services.some(s => s.severity === \"critical\");\n  const highestSeverity = hasCritical ? \"CRITICAL\" : \"WARNING\";\n  const count = group.services.length;\n\n  const rowsHtml = group.services.map(s => `\n    <tr>\n      <td style=\"padding:8px;border:1px solid #ddd;\"><b>${escapeHtml(s.program_name)}</b></td>\n      <td style=\"padding:8px;border:1px solid #ddd;\">${escapeHtml((s.type || \"\").toUpperCase())}</td>\n      <td style=\"padding:8px;border:1px solid #ddd;\"><code>${escapeHtml(s.target)}</code></td>\n      <td style=\"padding:8px;border:1px solid #ddd;color:#b91c1c;\">${escapeHtml(s.error_detail)}</td>\n      <td style=\"padding:8px;border:1px solid #ddd;\">${escapeHtml((s.severity || \"warning\").toUpperCase())}</td>\n    </tr>`).join(\"\");\n\n  const html = `\n    <h2>🐍 Anagtia Service Alert (${highestSeverity})</h2>\n    <p>Team: <b>${escapeHtml(group.team)}</b> &mdash; Confirmed outages after 60s retry: <b>${count}</b></p>\n    <p>Checked at: ${escapeHtml(checkedAt)}</p>\n    <table style=\"border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;\">\n      <thead>\n        <tr style=\"background:#f3f4f6;text-align:left;\">\n          <th style=\"padding:8px;border:1px solid #ddd;\">Service</th>\n          <th style=\"padding:8px;border:1px solid #ddd;\">Type</th>\n          <th style=\"padding:8px;border:1px solid #ddd;\">Target</th>\n          <th style=\"padding:8px;border:1px solid #ddd;\">Error Detail</th>\n          <th style=\"padding:8px;border:1px solid #ddd;\">Severity</th>\n        </tr>\n      </thead>\n      <tbody>${rowsHtml}</tbody>\n    </table>\n    <br>\n    <p style=\"color:#6b7280;font-size:12px;\">Generated automatically by Anagtia Service Monitor (PoC).</p>\n  `;\n\n  const names = group.services.map(s => s.program_name).join(\", \");\n  const subject = `⚠️ [${highestSeverity}] Anagtia Alert (${group.team}): ${count} service(s) down - ${names}`;\n\n  return {\n    json: {\n      to_email: group.to_email,\n      team: group.team,\n      highest_severity: highestSeverity,\n      failed_count: count,\n      subject,\n      html\n    }\n  };\n});"
+        "jsCode": "// Team-based Routing Matrix (Dynamic Alert Routing + Digest Aggregation)\n// Groups all confirmed HTTP & SSH outages by team/recipient so a broad outage\n// sends 1 digest email per team instead of flooding mailboxes.\n\nconst TEAM_ROUTING = {\n  backend: \"backend-team@example.com, it-ops@example.com\",\n  dba: \"dba-team@example.com, it-ops@example.com\",\n  \"web-ops\": \"webops@example.com, it-ops@example.com\",\n  default: \"admin@example.com, it-ops@example.com\"\n};\n\nconst items = $input.all().map(i => i.json);\nif (items.length === 0) return [];\n\nconst checkedAt = typeof $now?.toFormat === \"function\"\n  ? $now.toFormat(\"dd/MM/yyyy HH:mm\")\n  : new Date().toISOString().slice(0, 16).replace(\"T\", \" \");\n\nconst groups = {};\nfor (const svc of items) {\n  const toEmail = svc.recipient || TEAM_ROUTING[svc.owner_team] || TEAM_ROUTING.default;\n  const team = svc.owner_team || \"general\";\n  const key = `${team}::${toEmail}`;\n  if (!groups[key]) {\n    groups[key] = { team, to_email: toEmail, services: [] };\n  }\n  groups[key].services.push(svc);\n}\n\nconst escapeHtml = (str) => String(str ?? \"\")\n  .replace(/&/g, \"&amp;\")\n  .replace(/</g, \"&lt;\")\n  .replace(/>/g, \"&gt;\");\n\nreturn Object.values(groups).map(group => {\n  const hasCritical = group.services.some(s => s.severity === \"critical\");\n  const highestSeverity = hasCritical ? \"CRITICAL\" : \"WARNING\";\n  const count = group.services.length;\n\n  const rowsHtml = group.services.map(s => `\n    <tr>\n      <td style=\"padding:8px;border:1px solid #ddd;\"><b>${escapeHtml(s.program_name)}</b></td>\n      <td style=\"padding:8px;border:1px solid #ddd;\">${escapeHtml((s.type || \"\").toUpperCase())}</td>\n      <td style=\"padding:8px;border:1px solid #ddd;\"><code>${escapeHtml(s.target)}</code></td>\n      <td style=\"padding:8px;border:1px solid #ddd;color:#b91c1c;\">${escapeHtml(s.error_detail)}</td>\n      <td style=\"padding:8px;border:1px solid #ddd;\">${escapeHtml((s.severity || \"warning\").toUpperCase())}</td>\n    </tr>`).join(\"\");\n\n  const html = `\n    <h2>🐍 Anagtia Service Alert (${highestSeverity})</h2>\n    <p>Team: <b>${escapeHtml(group.team)}</b> &mdash; Confirmed outages after 60s retry: <b>${count}</b></p>\n    <p>Checked at: ${escapeHtml(checkedAt)}</p>\n    <table style=\"border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px;\">\n      <thead>\n        <tr style=\"background:#f3f4f6;text-align:left;\">\n          <th style=\"padding:8px;border:1px solid #ddd;\">Service</th>\n          <th style=\"padding:8px;border:1px solid #ddd;\">Type</th>\n          <th style=\"padding:8px;border:1px solid #ddd;\">Target</th>\n          <th style=\"padding:8px;border:1px solid #ddd;\">Error Detail</th>\n          <th style=\"padding:8px;border:1px solid #ddd;\">Severity</th>\n        </tr>\n      </thead>\n      <tbody>${rowsHtml}</tbody>\n    </table>\n    <br>\n    <p style=\"color:#6b7280;font-size:12px;\">Generated automatically by Anagtia Service Monitor (PoC).</p>\n  `;\n\n  const names = group.services.map(s => s.program_name).join(\", \");\n  const subject = `⚠️ [${highestSeverity}] Anagtia Alert (${group.team}): ${count} service(s) down - ${names}`;\n\n  return {\n    json: {\n      to_email: group.to_email,\n      team: group.team,\n      highest_severity: highestSeverity,\n      failed_count: count,\n      subject,\n      html\n    }\n  };\n});"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3664,
-        880
+        6256,
+        2416
       ],
-      "id": "2dc3b926-22a3-46ad-9f52-9cf8e92a1a66",
+      "id": "e3815848-fa1e-4766-83d1-1f64964969d4",
       "name": "BuildAlertDigest"
     },
     {
       "parameters": {
-        "fromEmail": "anagtia-monitor@example.it",
+        "fromEmail": "anagtia-monitor@example.com",
         "toEmail": "={{ $json.to_email }}",
         "subject": "={{ $json.subject }}",
         "html": "={{ $json.html }}",
@@ -415,51 +415,94 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        3904,
-        880
+        6496,
+        2416
       ],
-      "id": "e93b93ce-2522-4227-9dd8-2a5ed6b7fafd",
+      "id": "542455e8-8d84-40d1-b9fe-060845971b77",
       "name": "SendUnifiedAlert",
       "webhookId": "be3b1921-563c-4c12-84ac-f27c3189080a",
-      "credentials": {
-        "smtp": {
-          "id": "3Q23pwp350OYIE3y",
-          "name": "SMTP account"
-        }
-      },
       "onError": "continueRegularOutput",
       "notes": "Unified notification node for both HTTP and SSH failures. Easily swap or extend in parallel with Slack/Teams."
     },
     {
       "parameters": {
-        "content": "PROJECT: ANAGTIA - SERVICE MONITOR (PoC - HTTP & SSH)\n\nOVERVIEW:\nInspired by the ancient Samnite goddess of protection, Anagtia is a modular Proof of Concept demonstrating dual-protocol monitoring (HTTP APIs + SSH service checks), anti-flapping retry logic, and team-routed digest alerts.\n\nWORKFLOW LOGIC:\n1. HourlyCheck (Schedule Trigger): Runs every hour 24/7 (Cron: 0 0 * * * *).\n2. ListProgram (Code): Mock service inventory (HTTP + SSH) with owner_team and severity.\n3. ProgramLoop + RouteCheckType: Executes all checks without waiting inside the loop.\n4. CheckHTTP / CheckSSH(Mock) + RecordCheckResult: Normalizes HTTP & SSH outcomes. CheckHTTP uses fullResponse=true, neverError=true, and timeout=10s.\n5. FilterFailed -> Wait60Sec: Runs a SINGLE collective 60s wait only if at least one service failed.\n6. RetryLoop -> FilterStillDown: Retries only the failed HTTP/SSH targets.\n7. BuildAlertDigest -> SendUnifiedAlert: Aggregates confirmed outages by team and sends 1 HTML digest email per team.",
-        "height": 352,
-        "width": 720
+        "content": "# 🐍 Anagtia — Service Monitor (HTTP & SSH)\n\nMonitors **HTTP APIs** and **SSH server commands**, filters transient glitches with a collective 60-second retry, and emails one HTML digest per owning team.\n\n## How it works\n1. **Schedule & Inventory:** Loads targets (`http` / `ssh`) with `owner_team` and `severity`.\n2. **Initial Check Pass:** Runs all checks without in-loop waits and normalizes results.\n3. **Collective Retry:** Pauses once for 60s **only** if failures occurred, then re-checks failed items.\n4. **Team Digest Alert:** Groups confirmed outages by team and sends 1 consolidated email per team.\n\n## Setup & Production Notes\n- **Test now:** Click **Test Workflow** (`httpbin.org/status/500` triggers the retry & digest path). To test SSH failure, change `\"success\"` to `\"failed\"` in `CheckSSH(Mock)` and `CheckSSH(RetryMock)`.\n- **SMTP:** Configure your SMTP credentials in `SendUnifiedAlert` and update `TEAM_ROUTING` in `BuildAlertDigest`.\n- **SSH in Production:** Replace the mock nodes with the native SSH node (single host) or an `Execute Command` bastion/Ansible runner or VPN HTTP healthcheck agent (multi-host).\n- **Inventory:** Swap `ListProgram` for Google Sheets, PostgreSQL, or an API.",
+        "height": 752,
+        "width": 464,
+        "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1680,
-        1088
+        4048,
+        3088
       ],
-      "id": "4f822db9-a9e0-49b8-94e2-56f5b09e7fa2",
-      "name": "Sticky Note"
+      "id": "69be163f-a5ff-4a37-9bd3-6691b5217710",
+      "name": "OverviewStickyNote"
     },
     {
       "parameters": {
-        "content": "POC TO PRODUCTION NOTES (HTTP & SSH):\n\n1. REPLACING SSH MOCK:\n- Single server: Replace CheckSSH(Mock) & CheckSSH(RetryMock) with n8n's native SSH node (Execute Command) and map output code === 0 in RecordCheckResult.\n- Multi-host fleet: Since n8n's native SSH node binds to one static host credential per node, use either an Execute Command bastion/Ansible runner (with dedicated non-root keys) or authenticated HTTP healthcheck agents over VPN.\n\n2. SERVICE INVENTORY:\nReplace ListProgram with Google Sheets, PostgreSQL, or a JSON API for zero-code maintenance.\n\n3. SMTP CREDENTIALS:\nUpdate SendUnifiedAlert with real corporate SMTP credentials (STARTTLS/TLS) and valid SPF/DKIM sender domain.",
-        "height": 288,
-        "width": 720,
-        "color": 3
+        "content": "## 1. Trigger & Service Inventory\nRuns hourly (`0 0 * * * *`) and loads the target list (`program_name`, `type`, `target`, `owner_team`, `severity`).",
+        "height": 336,
+        "width": 432,
+        "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1680,
-        1632
+        4560,
+        3488
       ],
-      "id": "61ab7fab-d0ba-425f-8a88-4de540329e58",
-      "name": "Sticky Note1"
+      "id": "6a72cc41-b77d-4f73-8123-db6822cbb441",
+      "name": "Step1StickyNote"
+    },
+    {
+      "parameters": {
+        "content": "## 2. Initial Dual-Protocol Check Loop\nRoutes `http` and `ssh` targets without waiting inside the loop.\n`CheckHTTP` enables `fullResponse`, `neverError`, and a `10s` timeout; `RecordCheckResult` preserves loop metadata across error branches.",
+        "height": 624,
+        "width": 912,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5024,
+        3488
+      ],
+      "id": "74013653-70d8-44bc-a707-a9d8a549f307",
+      "name": "Step2StickyNote"
+    },
+    {
+      "parameters": {
+        "content": "## 3. Collective 60s Wait & Retry Loop\nOnly failed items enter `Wait60Sec` (a single 60s delay for all outages combined) and are re-checked in `RetryLoop` before final evaluation.",
+        "height": 608,
+        "width": 1408,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5248,
+        2800
+      ],
+      "id": "09c0c4a5-38d8-4873-adc7-6e7b3b52c996",
+      "name": "Step3StickyNote"
+    },
+    {
+      "parameters": {
+        "content": "## 4. Outage Filtering & Team Digest Alerting\nFilters out recovered services, groups confirmed outages by `owner_team` (or `recipient`) into an HTML table, and sends **one digest email per team**.",
+        "height": 496,
+        "width": 688,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5968,
+        2256
+      ],
+      "id": "4272da32-870d-4084-ad34-1f1bdae7775a",
+      "name": "Step4StickyNote"
     }
   ],
   "pinData": {},
@@ -717,13 +760,20 @@
     "binaryMode": "separate",
     "availableInMCP": true
   },
-  "versionId": "8173bf6a-3f64-40b4-a779-e7e3c1382b34",
+  "versionId": "27106a30-b256-45b3-9e34-42c1196ffc5a",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "c8111c6edd7b0544a5d7c526ca4131a11b7ccbe5323720c554ec286b841bdcb1"
   },
   "nodeGroups": [],
   "id": "iX11FT1yy6mQ2v3j",
   "tags": [
+    {
+      "updatedAt": "2026-11-23T15:03:57.670Z",
+      "createdAt": "2026-11-23T15:03:57.670Z",
+      "id": "9eG9vXWR8xukI5Ag",
+      "name": "v.1.1.0"
+    },
     {
       "updatedAt": "2026-11-14T10:41:12.832Z",
       "createdAt": "2026-11-14T10:41:12.832Z",
